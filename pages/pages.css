@@ -1,0 +1,112 @@
+/* Pages CSS - Optimized for reading and consistency */
+
+/* Navigation */
+.breadcrumb {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    background: transparent;
+}
+
+.breadcrumb a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb span {
+    color: var(--text-secondary);
+}
+
+/* Page Content Container */
+.page-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 2rem;
+}
+
+.content-area {
+    padding: 0 1.5rem 2rem;
+    max-width: 100%;
+}
+
+/* Typography - Blog Ready */
+.content-area h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.content-area h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.content-area h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.content-area p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    color: #333;
+    /* Slightly softer black for reading */
+}
+
+.content-area ul,
+.content-area ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+}
+
+.content-area li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.content-area a {
+    color: #4a00e0;
+    /* Use a nice accent/primary color */
+    text-decoration: underline;
+}
+
+.content-area blockquote {
+    border-left: 4px solid var(--border-color);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+/* Footer Consistency */
+.page-footer {
+    padding: 2rem 1.5rem;
+    background: #f1f1f1;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: auto;
+    /* Push to bottom if content is short */
+}
+
+.page-footer a {
+    color: var(--text-primary);
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+/* Responsive tweaks */
+@media (min-width: 600px) {
+    .content-area {
+        padding: 0 2rem 3rem;
+    }
+}

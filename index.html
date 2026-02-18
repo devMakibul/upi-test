@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI QR Lab - Create Custom Payment Codes</title>
+    <meta name="description"
+        content="Generate beautiful, custom UPI QR codes for any payment app. Secure, local, and free.">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="/assets/favicon.ico" alt="UPI QR Lab logo">
+                </div>
+                <span>UPI QR Lab</span>
+            </div>
+            <div class="nav-links">
+                <a href="/create/" class="btn-nav">Create QR Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container hero-content">
+            <div class="hero-text" data-speed="0.5">
+                <h1 class="hero-title">UPI QR Codes, <br> <span class="gradient-text">Reimagined.</span></h1>
+                <p class="hero-subtitle">Create stunning, customized UPI QR codes that match your brand. Secure, free,
+                    and completely client-side.</p>
+                <div class="hero-actions">
+                    <a href="/create/" class="btn-primary">Create QR Now</a>
+                    <a href="#demo" class="btn-secondary">View Examples</a>
+                </div>
+            </div>
+            <div class="hero-visual-scroll">
+                <div class="hero-mockup-container">
+                    <!-- Main Central Screenshot -->
+                    <div class="mockup-main">
+                        <div class="mockup-screen">
+                            <img src="/assets/mockup.webp" alt="Mockup">
+                        </div> <!-- User to place image here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Us?</h2>
+                <p>Designed for aesthetics, built for privacy.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3>100% Secure</h3>
+                    <p>All data processing happens locally on your device. We never see your payment details.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                            <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                            <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                        </svg>
+                    </div>
+                    <h3>Fully Custom</h3>
+                    <p>Change colors, add logos, adjust patterns, and apply beautiful themes instantly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>High Quality</h3>
+                    <p>Download crystal clear PNGs ready for printing or digital sharing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <bolt>⚡</bolt>
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                    </div>
+                    <h3>Offline Ready</h3>
+                    <p>Works offline as a Progressive Web App (PWA). Install it once, use it forever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (Marquee) -->
+    <section class="gallery-section" id="demo">
+        <div class="gallery-container">
+            <h2 class="gallery-title">Made with UPI QR Lab</h2>
+            <div class="gallery-marquee">
+                <div class="gallery-track">
+                    <!-- Duplicate items for infinite scroll -->
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-1.webp" alt="theme 1">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-2.webp" alt="theme 2">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-3.webp" alt="theme 3">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-4.webp" alt="theme 4">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-5.webp" alt="theme 5">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-6.webp" alt="theme 6">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-7.webp" alt="theme 7">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-8.webp" alt="theme 8">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-9.webp" alt="theme 9">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-10.webp" alt="theme 10">
+                        </div>
+                    </div>
+                    <!-- Second Set -->
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-1.webp" alt="theme 1">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-2.webp" alt="theme 2">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-3.webp" alt="theme 3">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-4.webp" alt="theme 4">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-5.webp" alt="theme 5">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-6.webp" alt="theme 6">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-7.webp" alt="theme 7">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-8.webp" alt="theme 8">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-9.webp" alt="theme 9">
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="mock-screen">
+                            <img src="/assets/themes/theme-10.webp" alt="theme 10">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Loved by Users</h2>
+                <p>See what people have to say.</p>
+            </div>
+
+            <div class="testimonials-wrapper">
+                <button class="nav-btn prev" id="test-prev">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+
+                <div class="testimonials-scroll" id="testimonials-scroll">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <div class="user-avatar">CD</div>
+                        <p class="user-review">"I use this for my shop's payment stand. Use the 'Dark Tunnel' theme, it
+                            looks so premium."</p>
+                        <h5 class="user-name">Charulata D.</h5>
+                        <span class="user-role">Small Business Owner</span>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <div class="user-avatar">UK</div>
+                        <p class="user-review">"Privacy focused and offline capable? This is exactly what I was looking
+                            for. Customization options are insane!"</p>
+                        <h5 class="user-name">Uday K.</h5>
+                        <span class="user-role">Developer</span>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card">
+                        <div class="user-avatar">BM</div>
+                        <p class="user-review">"Super easy to use. I generated codes for my whole family in minutes. The
+                            'Kitten' theme is my favorite!"
+                        </p>
+                        <h5 class="user-name">Bably M.</h5>
+                        <span class="user-role">Student</span>
+                    </div>
+                </div>
+
+                <button class="nav-btn next" id="test-next">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Showcase / How it Works -->
+    <section id="how-it-works" class="showcase-section">
+        <div class="container showcase-container">
+            <div class="phone-mockup-wrapper">
+                <div class="phone-frame">
+                    <div class="screen-content">
+                        <!-- Simulate App UI -->
+                        <div class="app-header"></div>
+                        <div class="app-qr"></div>
+                        <div class="app-controls"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="showcase-text">
+                <h2>Simple &amp; Powerful.</h2>
+                <ul class="steps-list">
+                    <li class="step-item active">
+                        <span class="step-num">01</span>
+                        <div class="step-content">
+                            <h4>Enter Details</h4>
+                            <p>Just input your UPI ID. Payee name and amount are optional.</p>
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-num">02</span>
+                        <div class="step-content">
+                            <h4>Design It</h4>
+                            <p>Pick a preset theme or customize every pixel to match your vibe.</p>
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-num">03</span>
+                        <div class="step-content">
+                            <h4>Download</h4>
+                            <p>Get your custom QR code instantly. No sign-ups required.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <h2>Ready to upgrade your payments?</h2>
+                <p>Join thousands of users creating professional UPI codes.</p>
+                <a href="/create/" class="btn-primary large">Create QR Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span>UPI QR Lab</span>
+                    <p>Made with ❤️ for everyone.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h5>Product</h5>
+                        <a href="#features">Features</a>
+                        <a href="#gallery">Showcase</a>
+                        <a href="/create/">Create QR Code</a>
+                    </div>
+                    <div class="link-group">
+                        <h5>More</h5>
+                        <a href="/pages/about/">About</a>
+                        <a href="/pages/privacy-policy/">Privacy Policy</a>
+                        <a href="/pages/disclaimer/">Disclaimer</a>
+                        <a href="/pages/contact/">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Makibul. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

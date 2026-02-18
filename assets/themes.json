@@ -1,0 +1,254 @@
+[
+    {
+        "id": "theme-sunburst",
+        "name": "Sunburst",
+        "preview": "/assets/themes/theme-2.webp",
+        "settings": {
+            "corner_type": "extra-rounded",
+            "corner_color": "#003C05",
+            "dots_type": "dots",
+            "dots_color": "#00940B",
+            "text_color": "#003D05",
+            "text_shadow": "false",
+            "qr_bg_color": "#ffffff",
+            "qr_bg_op_val": 30,
+            "glass_blur_enabled": "false",
+            "bg_image": "/assets/backgrounds/sunburst.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 50,
+            "logo_size": 0.4
+        }
+    },
+    {
+        "id": "theme-hearts",
+        "name": "Hearts",
+        "preview": "/assets/themes/theme-10.webp",
+        "settings": {
+            "corner_type": "dot",
+            "corner_color": "#ff9494",
+            "dots_type": "extra-rounded",
+            "dots_color": "#ff99f4",
+            "text_color": "#003366",
+            "text_shadow": "false",
+            "qr_bg_color": "#ffffff",
+            "qr_bg_op_val": 85,
+            "glass_blur_enabled": "false",
+            "bg_image": "/assets/backgrounds/hearts.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 12,
+            "logo_size": 0.35
+        }
+    },
+    {
+        "id": "theme-cutie",
+        "name": "Cutie",
+        "preview": "/assets/themes/theme-9.webp",
+        "settings": {
+            "corner_type": "extra-rounded",
+            "corner_color": "#ff69b4",
+            "dots_type": "classy-rounded",
+            "dots_color": "#ffb6c1",
+            "text_color": "#d63384",
+            "text_shadow": "true",
+            "qr_bg_color": "#ffffff",
+            "qr_bg_op_val": 90,
+            "glass_blur_enabled": "true",
+            "bg_image": "/assets/backgrounds/cutie.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 20,
+            "logo_size": 0.35
+        }
+    },
+    {
+        "id": "theme-dark-tunnel",
+        "name": "Dark Tunnel",
+        "preview": "/assets/themes/theme-8.webp",
+        "settings": {
+            "corner_type": "square",
+            "corner_color": "#efefef",
+            "dots_type": "square",
+            "dots_color": "#eeeeee",
+            "text_color": "#ffffff",
+            "text_shadow": "true",
+            "qr_bg_color": "#ffffff",
+            "qr_bg_op_val": 20,
+            "glass_blur_enabled": "true",
+            "bg_image": "/assets/backgrounds/dark-tunnel.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 0,
+            "logo_size": 0.4
+        }
+    },
+    {
+        "id": "theme-ghost-hand",
+        "name": "Ghost Hand",
+        "preview": "/assets/themes/theme-7.webp",
+        "settings": {
+            "corner_type": "extra-rounded",
+            "corner_color": "#dadada",
+            "dots_type": "extra-rounded",
+            "dots_color": "#ededed",
+            "text_color": "#c9c9c9",
+            "text_shadow": "false",
+            "qr_bg_color": "#ff0000",
+            "qr_bg_op_val": 60,
+            "glass_blur_enabled": "true",
+            "bg_image": "/assets/backgrounds/ghost-hand.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 25,
+            "logo_size": 0.4
+        }
+    },
+    {
+        "id": "theme-kitten",
+        "name": "Kitten",
+        "preview": "/assets/themes/theme-6.webp",
+        "settings": {
+            "corner_type": "extra-rounded",
+            "corner_color": "#8d5524",
+            "dots_type": "classy-rounded",
+            "dots_color": "#c68c53",
+            "text_color": "#5e3a18",
+            "text_shadow": "true",
+            "qr_bg_color": "#fff0e6",
+            "qr_bg_op_val": 95,
+            "glass_blur_enabled": "false",
+            "bg_image": "/assets/backgrounds/kitten.webp",
+            "bg_opacity": 100,
+            "logo": "/assets/icons/paw.webp",
+            "logo_radius": 50,
+            "logo_size": 0.30
+        }
+    },
+    {
+        "id": "theme-media-player",
+        "name": "Media Player",
+        "preview": "/assets/themes/theme-11.webp",
+        "settings": {
+            "corner_type": "square",
+            "corner_color": "#ff4e4e",
+            "dots_type": "square",
+            "dots_color": "#678aff",
+            "text_color": "#5100ff",
+            "text_shadow": "true",
+            "qr_bg_color": "#ffffff",
+            "qr_bg_op_val": 2,
+            "glass_blur_enabled": "false",
+            "bg_image": "/assets/backgrounds/media-player.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 4,
+            "logo_size": 0.3
+        }
+    },
+    {
+        "id": "theme-paper-grid",
+        "name": "Paper Grid",
+        "preview": "/assets/themes/theme-5.webp",
+        "settings": {
+            "corner_type": "square",
+            "corner_color": "#2c3e50",
+            "dots_type": "classy",
+            "dots_color": "#34495e",
+            "text_color": "#2c3e50",
+            "text_shadow": "false",
+            "qr_bg_color": "#ffffff",
+            "qr_bg_op_val": 2,
+            "glass_blur_enabled": "false",
+            "bg_image": "/assets/backgrounds/paper-grid.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 0,
+            "logo_size": 0.4
+        }
+    },
+    {
+        "id": "theme-pop-art",
+        "name": "Pop Art",
+        "preview": "/assets/themes/theme-4.webp",
+        "settings": {
+            "corner_type": "extra-rounded",
+            "corner_color": "#ff9f9f",
+            "dots_type": "dots",
+            "dots_color": "#ffdada",
+            "text_color": "#2c3e50",
+            "text_shadow": "true",
+            "qr_bg_color": "#ff0000",
+            "qr_bg_op_val": 60,
+            "glass_blur_enabled": "true",
+            "bg_image": "/assets/backgrounds/pop-art.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 50,
+            "logo_size": 0.45
+        }
+    },
+    {
+        "id": "theme-scrapbook",
+        "name": "Scrapbook",
+        "preview": "/assets/themes/theme-12.webp",
+        "settings": {
+            "corner_type": "extra-rounded",
+            "corner_color": "#8b4513",
+            "dots_type": "classy-rounded",
+            "dots_color": "#d2691e",
+            "text_color": "#5d4037",
+            "text_shadow": "false",
+            "qr_bg_color": "#fff8dc",
+            "qr_bg_op_val": 90,
+            "glass_blur_enabled": "true",
+            "bg_image": "/assets/backgrounds/scrapbook.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 10,
+            "logo_size": 0.4
+        }
+    },
+    {
+        "id": "theme-skull",
+        "name": "Skull",
+        "preview": "/assets/themes/theme-3.webp",
+        "settings": {
+            "corner_type": "dot",
+            "corner_color": "#ffffff",
+            "dots_type": "classy",
+            "dots_color": "#e6e6e6",
+            "text_color": "#ffffff",
+            "text_shadow": "true",
+            "qr_bg_color": "#ffffff",
+            "qr_bg_op_val": 10,
+            "glass_blur_enabled": "true",
+            "bg_image": "/assets/backgrounds/skull.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 0,
+            "logo_size": 0.4
+        }
+    },
+    {
+        "id": "theme-wall-light",
+        "name": "Wall Light",
+        "preview": "/assets/themes/theme-1.webp",
+        "settings": {
+            "corner_type": "dot",
+            "corner_color": "#e2ecff",
+            "dots_type": "extra-rounded",
+            "dots_color": "#00ffff",
+            "text_color": "#00ffff",
+            "text_shadow": "true",
+            "qr_bg_color": "#000000",
+            "qr_bg_op_val": 30,
+            "glass_blur_enabled": "true",
+            "bg_image": "/assets/backgrounds/wall-light.webp",
+            "bg_opacity": 100,
+            "logo": "",
+            "logo_radius": 8,
+            "logo_size": 0.4
+        }
+    }
+]

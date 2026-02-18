@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UPI QR Lab - Generate Custom QR Code for UPI</title>
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Generate custom UPI QR codes locally and securely.">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+    <!-- Libraries -->
+    <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/create/style.css">
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="logo-area">
+            <img src="/assets/favicon-32x32.png" alt="Logo" class="app-logo">
+            <h1>UPI QR Lab
+                <div class="tagline-container">
+                    <span id="tagline-version" class="tagline-pill"></span>
+                    <button id="tagline-update" class="tagline-pill update hidden">Update Now</button>
+                </div>
+            </h1>
+        </div>
+        <nav class="nav-tabs">
+            <button id="tab-home" class="nav-btn active" aria-label="Home">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </button>
+            <button id="tab-settings" class="nav-btn" aria-label="Settings">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- HOME SECTION -->
+        <section id="section-home" class="view-section active">
+            <!-- Top Row Container -->
+            <div class="home-top-row">
+                <!-- UPI Info Display -->
+                <div id="upi-info-card" class="upi-info-card">
+                    <div class="upi-info-content">
+                        <span class="upi-label">PAYING TO</span>
+                        <p id="display-payee-name" class="payee-name">--</p>
+                        <p id="display-upi-id" class="upi-id">--</p>
+                    </div>
+                </div>
+
+                <!-- QR Preview Card -->
+                <div id="qr-preview-card" class="qr-preview-card" tabindex="0">
+                    <div id="preview-qr-container"></div> <!-- Small QR -->
+                    <p class="qr-preview-text">
+                        View larger
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Amount Input -->
+            <div class="amount-entry-container">
+                <div class="amount-display-wrapper">
+                    <span class="currency-symbol">₹</span>
+                    <div id="amount-field-container" class="amount-field-container">
+                        <span class="amount-placeholder">0</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Custom Keypad -->
+            <div class="keypad">
+                <button class="key">1</button>
+                <button class="key">2</button>
+                <button class="key">3</button>
+                <button class="key">4</button>
+                <button class="key">5</button>
+                <button class="key">6</button>
+                <button class="key">7</button>
+                <button class="key">8</button>
+                <button class="key">9</button>
+                <button class="key" id="key-dot">.</button>
+                <button class="key" id="key-0">0</button>
+                <button class="key" id="key-backspace">⌫</button>
+            </div>
+        </section>
+
+        <!-- SETTINGS SECTION -->
+        <section id="section-settings" class="view-section">
+            <div class="settings-list">
+                <!-- PWA Install Banner -->
+                <div class="settings-item hidden" id="pwa-install-banner"
+                    style="background: #f0f9ff; border: 1px solid #bae6fd; margin-bottom: 1rem;">
+                    <div class="setting-label">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <span style="color: #0c4a6e;">Install as Web App</span>
+                    </div>
+                    <button class="btn-secondary" id="btn-pwa-install-banner"
+                        style="font-size: 0.8rem; padding: 0.5rem 0.75rem; height: auto;">Install</button>
+                </div>
+
+                <!-- Edit Details Row -->
+                <div class="settings-item" id="btn-edit-details">
+                    <div class="setting-label">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                        <span>Edit UPI details</span>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+
+                <!-- THEMES SECTION -->
+                <div class="theme-options-container"
+                    style="position: relative; display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1rem;">
+                    <h3 class="section-title" style="margin-bottom: 0;">Themes</h3>
+                    <div style="position: relative;">
+                        <button id="btn-theme-options" class="btn-icon" style="padding: 0.25rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="12" cy="5" r="1"></circle>
+                                <circle cx="12" cy="19" r="1"></circle>
+                            </svg>
+                        </button>
+                        <div id="theme-options-menu" class="custom-select-options"
+                            style="right: 0; left: auto; width: 220px;">
+                            <div class="custom-option" id="opt-export-theme">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    style="margin-right: 8px;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Export my theme
+                            </div>
+                            <div class="custom-option" id="opt-import-theme">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    style="margin-right: 8px;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                Import theme
+                            </div>
+                        </div>
+                        <input type="file" id="theme-import-file" accept=".themeupi,application/json"
+                            style="display: none;">
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="setting-subsection">
+                        <div class="bg-presets-container">
+                            <button class="scroll-arrow left" id="themes-scroll-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </button>
+                            <div class="bg-presets-scroll" id="themes-presets-scroll">
+                                <!-- Themes will be injected here via JS -->
+                            </div>
+                            <button class="scroll-arrow right" id="themes-scroll-right">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MERGED APPEARANCE SECTION -->
+                <h3 class="section-title">Appearance</h3>
+                <div class="settings-group">
+
+                    <!-- 1. Corners -->
+                    <div class="setting-subsection">
+                        <label class="label-subsection">Corners</label>
+                        <div class="setting-control">
+                            <div class="custom-select" id="corner-type-select" tabindex="0">
+                                <span class="select-trigger">Extra Rounded</span>
+                                <div class="custom-options">
+                                    <div class="custom-option selected" data-value="extra-rounded">Extra Rounded</div>
+                                    <div class="custom-option" data-value="dot">Circle</div>
+                                    <div class="custom-option" data-value="square">Square</div>
+                                </div>
+                            </div>
+                            <input type="color" id="corner-color-input" value="#808080" class="hidden">
+                            <div id="corner-color-preview" class="color-preview" style="background-color: #808080;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-separator"></div>
+
+                    <!-- 2. Patterns -->
+                    <div class="setting-subsection">
+                        <label class="label-subsection">Patterns</label>
+                        <div class="setting-control">
+                            <div class="custom-select" id="dots-type-select" tabindex="0">
+                                <span class="select-trigger">Classy Rounded</span>
+                                <div class="custom-options">
+                                    <div class="custom-option selected" data-value="classy-rounded">Classy Rounded</div>
+                                    <div class="custom-option" data-value="rounded">Rounded</div>
+                                    <div class="custom-option" data-value="dots">Dots</div>
+                                    <div class="custom-option" data-value="classy">Classy</div>
+                                    <div class="custom-option" data-value="square">Square</div>
+                                    <div class="custom-option" data-value="extra-rounded">Extra Rounded</div>
+                                </div>
+                            </div>
+                            <input type="color" id="dots-color-input" value="#4d4d4d" class="hidden">
+                            <div id="dots-color-preview" class="color-preview" style="background-color: #4d4d4d;"></div>
+                        </div>
+                    </div>
+
+                    <div class="settings-separator"></div>
+
+                    <!-- 3. Text -->
+                    <div class="setting-subsection">
+                        <label class="label-subsection">Text</label>
+                        <div class="setting-control">
+                            <div class="label-control">Text Color</div>
+                            <input type="color" id="text-color-input" value="#000000" class="hidden">
+                            <div id="text-color-preview" class="color-preview" style="background-color: #000000;"></div>
+                        </div>
+                        <div class="setting-control" style="margin-top: 0.75rem;">
+                            <div class="label-control">Text Shadow</div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="text-shadow-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-separator"></div>
+
+                    <!-- 4. QR Code -->
+                    <div class="setting-subsection">
+                        <label class="label-subsection">QR Background</label>
+                        <div class="setting-control">
+                            <div class="label-control">Background Color</div>
+                            <input type="color" id="qr-bg-color-input" value="#ffffff" class="hidden">
+                            <div id="qr-bg-color-preview" class="color-preview" style="background-color: #ffffff;">
+                            </div>
+                        </div>
+                        <!-- QR Opacity Slider -->
+                        <div class="setting-control" id="qr-bg-opacity-container"
+                            style="flex-direction: column; align-items: stretch; gap: 0.5rem; margin-top: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <label class="label-slider">Opacity</label>
+                                <span id="qr-bg-opacity-val" style="font-size: 0.8rem; font-weight: 600;">100%</span>
+                            </div>
+                            <input type="range" id="qr-bg-opacity-input" min="0" max="100" value="100"
+                                style="width: 100%;">
+                        </div>
+
+                        <!-- Glass Blur Toggle -->
+                        <div class="setting-control" style="margin-top: 0.75rem;">
+                            <div class="label-control">Frosted Glass Effect</div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="glass-effect-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Logo -->
+                <h3 class="section-title">Logo</h3>
+                <div class="settings-group">
+
+                    <div class="logo-controls">
+                        <!-- Presets -->
+                        <div class="setting-subsection">
+                            <label class="label-subsection">Choose Logo or Icon</label>
+                            <div class="logo-presets-row">
+                                <!-- Payments -->
+                                <button class="btn-preset-logo" data-url="/assets/icons/gpay.webp"
+                                    title="Google Pay"><img src="/assets/icons/gpay.webp" alt="GPay"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/phonepe.webp"
+                                    title="PhonePe"><img src="/assets/icons/phonepe.webp" alt="PhonePe"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/paytm.webp" title="Paytm"><img
+                                        src="/assets/icons/paytm.webp" alt="Paytm"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/amazon.webp"
+                                    title="Amazon Pay"><img src="/assets/icons/amazon.webp" alt="Amazon"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/bhim.webp" title="BHIM"><img
+                                        src="/assets/icons/bhim.webp" alt="BHIM"></button>
+
+
+                                <!-- Social -->
+                                <button class="btn-preset-logo" data-url="/assets/icons/whatsapp.webp"
+                                    title="WhatsApp"><img src="/assets/icons/whatsapp.webp" alt="WhatsApp"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/x.webp" title="X"><img
+                                        src="/assets/icons/x.webp" alt="X"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/insta.webp"
+                                    title="Instagram"><img src="/assets/icons/insta.webp" alt="Instagram"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/tg.webp" title="Telegram"><img
+                                        src="/assets/icons/tg.webp" alt="Telegram"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/gh.webp" title="GitHub"><img
+                                        src="/assets/icons/gh.webp" alt="GitHub"></button>
+
+                                <!-- AI -->
+                                <button class="btn-preset-logo" data-url="/assets/icons/chatgpt.webp"
+                                    title="ChatGPT"><img src="/assets/icons/chatgpt.webp" alt="ChatGPT"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/gemini.webp" title="Gemini"><img
+                                        src="/assets/icons/gemini.webp" alt="Gemini"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/claude.webp" title="Claude"><img
+                                        src="/assets/icons/claude.webp" alt="Claude"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/perp.webp"
+                                    title="Perplexity"><img src="/assets/icons/perp.webp" alt="Perplexity"></button>
+
+                                <!-- Misc -->
+                                <button class="btn-preset-logo" data-url="/assets/icons/paw.webp" title="Paw"><img
+                                        src="/assets/icons/paw.webp" alt="Paw"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/money.webp" title="Money"><img
+                                        src="/assets/icons/money.webp" alt="Money"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/donate.webp" title="Donate"><img
+                                        src="/assets/icons/donate.webp" alt="Donate"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/shop.webp" title="Shop"><img
+                                        src="/assets/icons/shop.webp" alt="Shop"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/food.webp" title="Food"><img
+                                        src="/assets/icons/food.webp" alt="Food"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/flight.webp" title="Flight"><img
+                                        src="/assets/icons/flight.webp" alt="Flight"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/dino.webp" title="Dino"><img
+                                        src="/assets/icons/dino.webp" alt="Dino"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/heart.webp" title="Heart"><img
+                                        src="/assets/icons/heart.webp" alt="Heart"></button>
+                                <button class="btn-preset-logo" data-url="/assets/icons/poop.webp" title="Poop"><img
+                                        src="/assets/icons/poop.webp" alt="Poop"></button>
+                            </div>
+                        </div>
+
+                        <div class="settings-separator"></div>
+
+                        <!-- Import -->
+                        <div class="setting-subsection">
+                            <label class="label-subsection">Import Logo</label>
+                            <div class="logo-import-row">
+                                <input type="text" id="logo-url-input" placeholder="Image URL">
+                                <button id="btn-fetch-logo" class="btn-sm">Fetch & Apply</button>
+                            </div>
+                            <div class="logo-import-row">
+                                <label for="logo-file-input" class="btn-secondary btn-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    Import from Gallery
+                                </label>
+                                <input type="file" id="logo-file-input" accept="image/*" hidden>
+                            </div>
+                        </div>
+
+                        <div class="settings-separator" id="logo-current-separator"></div>
+
+                        <!-- Current Selection -->
+                        <div class="setting-subsection" id="logo-current-subsection">
+                            <label class="label-subsection">Current Logo</label>
+                            <!-- Preview with Remove Button -->
+                            <div id="logo-preview-area" class="logo-preview-row hidden">
+                                <div class="logo-preview-left">
+                                    <div class="logo-preview-wrapper">
+                                        <img id="logo-img-preview" src="" alt="Logo Preview">
+                                    </div>
+                                </div>
+                                <button id="btn-remove-logo" class="btn-destructive btn-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Logo Radius Slider (Below Preview) -->
+                            <div class="setting-control hidden" id="logo-radius-container"
+                                style="flex-direction: column; align-items: stretch; gap: 0.5rem; margin-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <label class="label-slider">Logo Radius</label>
+                                    <span id="logo-radius-val" style="font-size: 0.8rem; font-weight: 600;">0px</span>
+                                </div>
+                                <input type="range" id="logo-radius-input" min="0" max="50" value="0"
+                                    style="width: 100%;">
+                            </div>
+
+                            <!-- Logo Size Slider -->
+                            <div class="setting-control hidden" id="logo-size-container"
+                                style="flex-direction: column; align-items: stretch; gap: 0.5rem; margin-top: 0.5rem;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <label class="label-slider">Logo Size</label>
+                                    <span id="logo-size-val" style="font-size: 0.8rem; font-weight: 600;">0.4</span>
+                                </div>
+                                <input type="range" id="logo-size-input" min="0.1" max="0.5" step="0.05" value="0.4"
+                                    style="width: 100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Background -->
+                <h3 class="section-title">Card Background</h3>
+                <div class="settings-group">
+
+                    <div class="bg-controls">
+                        <!-- Presets with Scroll -->
+                        <div class="setting-subsection">
+                            <label class="label-subsection">Choose Background</label>
+                            <div class="bg-presets-container">
+                                <button class="scroll-arrow left" id="bg-scroll-left">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                </button>
+                                <div class="bg-presets-scroll" id="bg-presets-scroll">
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/qr-bg.webp"
+                                        title="Abstract BG"><img src="/assets/backgrounds/qr-bg.webp"
+                                            alt="Abstract BG"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/sunburst.webp"
+                                        title="Sunburst"><img src="/assets/backgrounds/sunburst.webp"
+                                            alt="Sunburst"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/cutie.webp"
+                                        title="Cutie"><img src="/assets/backgrounds/cutie.webp" alt="Cutie"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/dark-tunnel.webp"
+                                        title="Dark Tunnel"><img src="/assets/backgrounds/dark-tunnel.webp"
+                                            alt="Dark Tunnel"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/ghost-hand.webp"
+                                        title="Ghost Hand"><img src="/assets/backgrounds/ghost-hand.webp"
+                                            alt="Ghost Hand"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/hearts.webp"
+                                        title="Hearts"><img src="/assets/backgrounds/hearts.webp" alt="Hearts"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/kitten.webp"
+                                        title="Kitten"><img src="/assets/backgrounds/kitten.webp" alt="Kitten"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/media-player.webp"
+                                        title="Media Player"><img src="/assets/backgrounds/media-player.webp"
+                                            alt="Media Player"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/paper-grid.webp"
+                                        title="Paper Grid"><img src="/assets/backgrounds/paper-grid.webp"
+                                            alt="Paper Grid"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/pop-art.webp"
+                                        title="Pop Art"><img src="/assets/backgrounds/pop-art.webp"
+                                            alt="Pop Art"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/scrapbook.webp"
+                                        title="Scrapbook"><img src="/assets/backgrounds/scrapbook.webp"
+                                            alt="Scrapbook"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/skull.webp"
+                                        title="Skull"><img src="/assets/backgrounds/skull.webp" alt="Skull"></button>
+                                    <button class="btn-preset-bg" data-url="/assets/backgrounds/wall-light.webp"
+                                        title="Wall Light"><img src="/assets/backgrounds/wall-light.webp"
+                                            alt="Wall Light"></button>
+                                </div>
+                                <button class="scroll-arrow right" id="bg-scroll-right">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="settings-separator"></div>
+
+                        <!-- Import -->
+                        <div class="setting-subsection">
+                            <label class="label-subsection">Import Background</label>
+                            <div class="logo-import-row">
+                                <input type="text" id="bg-url-input" placeholder="Image URL">
+                                <button id="btn-fetch-bg" class="btn-sm" disabled>Fetch & Apply</button>
+                            </div>
+                            <div class="logo-import-row">
+                                <label for="bg-file-input" class="btn-secondary btn-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    Import from Gallery
+                                </label>
+                                <input type="file" id="bg-file-input" accept="image/*" hidden>
+                            </div>
+                        </div>
+
+                        <div class="settings-separator" id="bg-current-separator"></div>
+
+                        <!-- Current Selection -->
+                        <div class="setting-subsection" id="bg-current-subsection">
+                            <label class="label-subsection">Current Background</label>
+                            <!-- Preview & Remove -->
+                            <div id="bg-preview-area" class="logo-preview-row hidden">
+                                <div class="logo-preview-left">
+                                    <div class="logo-preview-wrapper">
+                                        <img id="bg-img-preview" src="" alt="BG Preview"
+                                            style="object-fit: cover; width: 100%; height: 100%;">
+                                    </div>
+                                </div>
+                                <button id="btn-remove-bg" class="btn-destructive btn-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Opacity Slider -->
+                            <div class="setting-control hidden" id="bg-opacity-container"
+                                style="flex-direction: column; align-items: stretch; gap: 0.5rem; margin-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <label class="label-slider">Opacity</label>
+                                    <span id="bg-opacity-val" style="font-size: 0.8rem; font-weight: 600;">100%</span>
+                                </div>
+                                <input type="range" id="bg-opacity-input" min="0" max="100" value="100"
+                                    style="width: 100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- Share Tool -->
+            <!-- Sharing & More Section -->
+            <h3 class="section-title">More</h3>
+            <div class="settings-group">
+
+                <!-- Share Row -->
+                <div class="share-tool-row" style="margin-bottom: 1rem;">
+                    <button id="btn-share-tool" class="btn-primary full-width"
+                        style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        Share Tool
+                    </button>
+                    <button id="btn-copy-tool-link" class="btn-secondary icon-only" aria-label="Copy Tool Link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Links List -->
+                <div class="settings-links-list">
+                    <a href="/pages/about" class="settings-link-item">About</a>
+                    <a href="/pages/privacy-policy" class="settings-link-item">Privacy Policy</a>
+                    <a href="/pages/disclaimer" class="settings-link-item">Disclaimer</a>
+                    <a href="/pages/contact" class="settings-link-item">Contact</a>
+                </div>
+
+                <!-- Update Site Button -->
+                <button id="btn-update-site" class="btn-secondary full-width" style="margin-top: 1rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+                        <path d="M23 4v6h-6"></path>
+                        <path d="M1 20v-6h6"></path>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15">
+                        </path>
+                    </svg>
+                    Check for Updates
+                </button>
+                <p style="font-size: 0.7rem; color: #999; text-align: center; margin-top: 0.5rem;">
+                    Current Version: <span id="settings-version-display">--</span>
+                </p>
+            </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- OVERLAYS / BOTTOM SHEETS -->
+
+    <!-- 1. Setup Bottom Sheet -->
+    <div id="sheet-setup" class="bottom-sheet-overlay">
+        <div class="bottom-sheet">
+            <div class="sheet-header">
+                <h2>Setup UPI Details</h2>
+                <button id="btn-close-setup" class="btn-close-sheet hidden" aria-label="Close">✕</button>
+            </div>
+            <div class="sheet-content">
+
+                <!-- Tabs -->
+                <div class="sheet-tabs">
+                    <button class="sheet-tab active" data-target="setup-manual">Manual</button>
+                    <button class="sheet-tab" data-target="setup-scan">Scan</button>
+                </div>
+
+                <!-- Manual Content -->
+                <div id="setup-manual" class="sheet-tab-content active">
+                    <div class="form-group">
+                        <label for="input-upi-id">UPI ID</label>
+                        <input type="text" id="input-upi-id" placeholder="e.g. name@upi">
+                        <p id="upi-error-msg" class="text-error hidden">Invalid UPI ID format.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-payee-name">Payee Name</label>
+                        <input type="text" id="input-payee-name" placeholder="e.g. John Doe">
+                    </div>
+                    <button id="btn-save-setup" class="btn-primary full-width" disabled>Save</button>
+                </div>
+
+                <!-- Scan Content -->
+                <div id="setup-scan" class="sheet-tab-content">
+                    <div id="scanner-container">
+                        <!-- Camera preview here -->
+                    </div>
+                    <div class="scanner-controls">
+                        <button id="btn-start-scan" class="btn-primary">Start Camera Scan</button>
+                        <button id="btn-stop-scan" class="btn-destructive hidden">Stop Camera</button>
+                        <input type="file" id="scan-file-input" accept="image/*" hidden>
+                        <button id="btn-scan-file" class="btn-secondary" style="margin-top: 0.5rem;">Scan from
+                            Image</button>
+                    </div>
+                    <p class="scan-status" id="scan-feedback"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. QR Viewer Bottom Sheet -->
+    <div id="sheet-qr-viewer" class="bottom-sheet-overlay">
+        <div class="bottom-sheet">
+            <div class="sheet-header">
+                <h2>Your QR Code</h2>
+                <button id="btn-close-viewer" class="btn-close-sheet" aria-label="Close">✕</button>
+            </div>
+            <div class="sheet-content no-padding">
+
+
+
+                <!-- Capture Area -->
+                <div id="qr-capture-area" class="qr-capture-area">
+                    <div id="qr-bg-layer" class="qr-bg-layer"></div>
+                    <div class="qr-header-info">
+                        <span id="qr-view-upi" class="qr-view-upi"></span>
+                    </div>
+                    <div id="large-qr-container" class="large-qr-container">
+                        <!-- Glass Effect Layers -->
+                        <div id="qr-layer-glass" class="qr-layer-glass">
+                            <img id="glass-bg-image" src="" alt="" aria-hidden="true">
+                        </div>
+                        <div id="qr-layer-tint" class="qr-layer-tint"></div>
+                        <!-- QR Content -->
+                        <div id="large-qr-content" style="position: relative; z-index: 2; width: 100%;"></div>
+                    </div>
+                    <div id="qr-context-text" class="qr-context-text">
+                        <!-- Dynamic Text -->
+                    </div>
+                    <div class="qr-footer">
+                        upi.makibul.com
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="qr-bottom-options">
+                <!-- Quality Selector -->
+                <div class="custom-select-container">
+                    <label style="font-weight: 600; font-size: 0.9rem; color: #333;">Image Quality</label>
+                    <div style="position: relative;">
+                        <button id="quality-trigger" class="custom-select-trigger" data-value="3">
+                            <span id="quality-display">Medium</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div id="quality-options" class="custom-select-options">
+                            <div class="custom-option" data-value="2">Low</div>
+                            <div class="custom-option selected" data-value="3">Medium</div>
+                            <div class="custom-option" data-value="4">High</div>
+                            <div class="custom-option" data-value="5">Ultra</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Action Buttons -->
+                <div class="sheet-actions">
+                    <button id="btn-share-qr" class="btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        <span><u>S</u>hare</span>
+                    </button>
+                    <button id="btn-download-qr" class="btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <span><u>D</u>ownload</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. PWA Install Bottom Sheet -->
+    <div id="sheet-pwa-install" class="bottom-sheet-overlay">
+        <div class="bottom-sheet">
+            <div class="sheet-header">
+                <h2>Install as Web App</h2>
+                <button id="btn-close-pwa" class="btn-close-sheet" aria-label="Close">✕</button>
+            </div>
+            <div class="sheet-content">
+                <p style="margin-bottom: 1.5rem; color: #555; text-align: center; line-height: 1.5;">
+                    Install the app for a better experience, offline access, and instant loading.
+                </p>
+                <div class="sheet-actions">
+                    <button id="btn-pwa-later-action" class="btn-secondary full-width">Later</button>
+                    <button id="btn-pwa-install-action" class="btn-primary full-width">Install</button>
+                </div>
+                <!-- PWA Instructions Tabs -->
+                <div id="pwa-instructions-container" class="pwa-instructions-container">
+                    <div class="pwa-tabs">
+                        <button class="pwa-tab-btn" data-os="Android">Android</button>
+                        <button class="pwa-tab-btn" data-os="iOS">iOS</button>
+                        <button class="pwa-tab-btn" data-os="iPadOS">iPadOS</button>
+                        <button class="pwa-tab-btn" data-os="MacOS">MacOS</button>
+                        <button class="pwa-tab-btn" data-os="Others">Others</button>
+                    </div>
+
+                    <div class="pwa-instruction-scroll">
+                        <!-- Android -->
+                        <div class="pwa-instruction-content hidden" id="pwa-steps-Android">
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="12" cy="5" r="1"></circle>
+                                        <circle cx="12" cy="19" r="1"></circle>
+                                    </svg>
+                                </div>
+                                <p>1. Tap the <strong>three-dot menu</strong></p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                                    </svg>
+                                </div>
+                                <p>2. Select <strong>Add to Home screen</strong> or <strong>Install App</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- iOS -->
+                        <div class="pwa-instruction-content hidden" id="pwa-steps-iOS">
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76">
+                                        </polygon>
+                                    </svg>
+                                </div>
+                                <p>1. Open in <strong>Safari</strong> browser</p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg>
+                                </div>
+                                <p>2. Press <strong>More</strong> if no share icon</p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                        <polyline points="16 6 12 2 8 6"></polyline>
+                                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                                <p>3. Tap the <strong>Share</strong> button</p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <p>4. Scroll down to <strong>Add to Home Screen</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- iPadOS -->
+                        <div class="pwa-instruction-content hidden" id="pwa-steps-iPadOS">
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76">
+                                        </polygon>
+                                    </svg>
+                                </div>
+                                <p>1. Open in <strong>Safari</strong> browser</p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                        <polyline points="16 6 12 2 8 6"></polyline>
+                                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                                <p>2. Tap the <strong>Share</strong> button</p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg>
+                                </div>
+                                <p>3. Press <strong>More</strong> in share menu</p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <p>4. Scroll and select <strong>Add to Home Screen</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- MacOS -->
+                        <div class="pwa-instruction-content hidden" id="pwa-steps-MacOS">
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76">
+                                        </polygon>
+                                    </svg>
+                                </div>
+                                <p>1. Open in <strong>Safari</strong> or <strong>Chrome</strong></p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                        <polyline points="13 2 13 9 20 9"></polyline>
+                                    </svg>
+                                </div>
+                                <p>2. Click <strong>File</strong> in the Menu Bar</p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                                    </svg>
+                                </div>
+                                <p>3. Click <strong>Add to Dock</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- Others -->
+                        <div class="pwa-instruction-content hidden" id="pwa-steps-Others">
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                                    </svg>
+                                </div>
+                                <p>1. Open the <strong>Menu</strong></p>
+                            </div>
+                            <div class="pwa-step">
+                                <div class="step-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <p>2. Select <strong>Add to Home Screen</strong> or <strong>Install</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Color Picker Bottom Sheet -->
+    <div id="sheet-color-picker" class="bottom-sheet-overlay">
+        <div class="bottom-sheet">
+            <div class="sheet-header">
+                <h2>Select Color</h2>
+                <button id="btn-close-cp" class="btn-close-sheet" aria-label="Close">✕</button>
+            </div>
+            <div class="sheet-content color-picker-content">
+
+                <!-- Color Picker Area -->
+                <div class="cp-picker-area">
+                    <!-- Saturation/Brightness Square -->
+                    <div class="cp-sb-grid" id="cp-sb-grid">
+                        <div class="cp-sb-handle" id="cp-sb-handle"></div>
+                    </div>
+
+                    <!-- Hue Slider -->
+                    <div class="cp-hue-slider" id="cp-hue-slider">
+                        <div class="cp-hue-handle" id="cp-hue-handle"></div>
+                    </div>
+                </div>
+
+                <!-- Preview & Hex Input -->
+                <div class="cp-preview-section">
+                    <div id="cp-color-preview-box" class="cp-color-preview-box"></div>
+
+                    <div class="cp-hex-input-wrapper">
+                        <span class="cp-hex-prefix">#</span>
+                        <input type="text" id="cp-hex-input" class="cp-hex-input" maxlength="6" placeholder="FFFFFF">
+                    </div>
+                </div>
+
+                <!-- Presets -->
+                <div class="cp-presets-container">
+                    <p class="cp-presets-label">Presets</p>
+                    <div class="cp-presets-grid">
+                        <!-- Standard Colors -->
+                        <button class="btn-cp-preset" style="background-color: #ff0000;" data-color="#ff0000"></button>
+                        <button class="btn-cp-preset" style="background-color: #ff9900;" data-color="#ff9900"></button>
+                        <button class="btn-cp-preset" style="background-color: #ffff00;" data-color="#ffff00"></button>
+                        <button class="btn-cp-preset" style="background-color: #00ff00;" data-color="#00ff00"></button>
+                        <button class="btn-cp-preset" style="background-color: #00ffff;" data-color="#00ffff"></button>
+                        <button class="btn-cp-preset" style="background-color: #0000ff;" data-color="#0000ff"></button>
+                        <button class="btn-cp-preset" style="background-color: #9900ff;" data-color="#9900ff"></button>
+                        <button class="btn-cp-preset" style="background-color: #ff00ff;" data-color="#ff00ff"></button>
+
+                        <!-- Monochrome -->
+                        <button class="btn-cp-preset" style="background-color: #000000;" data-color="#000000"></button>
+                        <button class="btn-cp-preset" style="background-color: #4d4d4d;" data-color="#4d4d4d"></button>
+                        <button class="btn-cp-preset" style="background-color: #808080;" data-color="#808080"></button>
+                        <button class="btn-cp-preset light-border" style="background-color: #ffffff;"
+                            data-color="#ffffff"></button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="sheet-actions">
+                    <button id="btn-cp-set" class="btn-primary full-width">Set Color</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast hidden">Amount can't exceed 100000.</div>
+
+    <!-- Logic -->
+    <script src="/create/script.js"></script>
+</body>
+
+</html>
